@@ -9,6 +9,8 @@ import {
   DoCheck,
   ElementRef,
   EventEmitter,
+  Inject,
+  InjectionToken,
   Input,
   OnDestroy,
   Optional,
@@ -44,6 +46,21 @@ import { MdcSelectIcon } from './select-icon';
 import { MDCSelectHelperTextFoundation } from '@material/select/helper-text/index';
 import { cssClasses } from '@material/select/constants';
 import { MDCSelectFoundation } from '@material/select/index';
+
+/**
+ * Represents the default options for mdc-select that can be configured
+ * using an `MDC_SELECT_DEFAULT_OPTIONS` injection token.
+ */
+export interface MdcSelectDefaultOptions {
+  outlined?: boolean;
+}
+
+/**
+ * Injection token that can be used to configure the default options for all
+ * mdc-select usage within an app.
+ */
+export const MDC_SELECT_DEFAULT_OPTIONS =
+  new InjectionToken<MdcSelectDefaultOptions>('MDC_SELECT_DEFAULT_OPTIONS');
 
 export class MdcSelectBase {
   constructor(
@@ -402,7 +419,8 @@ export class MdcSelect extends _MdcSelectMixinBase implements AfterViewInit, DoC
     @Optional() private _ripple: MdcRipple,
     @Self() @Optional() public ngControl: NgControl,
     @Optional() _parentForm: NgForm,
-    @Optional() _parentFormGroup: FormGroupDirective) {
+    @Optional() _parentFormGroup: FormGroupDirective,
+    @Optional() @Inject(MDC_SELECT_DEFAULT_OPTIONS) private _defaults: MdcSelectDefaultOptions) {
 
     super(_defaultErrorStateMatcher, _parentForm, _parentFormGroup, ngControl);
 
