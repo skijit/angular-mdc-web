@@ -23,17 +23,14 @@ describe('MdcTextarea', () => {
 
   describe('basic behaviors', () => {
     let textFieldDebugElement: DebugElement;
-    let textFieldNativeElement: HTMLElement;
     let textFieldInstance: MdcTextarea;
     let testComponent: SimpleTextfield;
-    let inputElement: HTMLInputElement;
 
     beforeEach(() => {
       fixture = TestBed.createComponent(SimpleTextfield);
       fixture.detectChanges();
 
       textFieldDebugElement = fixture.debugElement.query(By.directive(MdcTextarea));
-      textFieldNativeElement = textFieldDebugElement.nativeElement;
       textFieldInstance = textFieldDebugElement.componentInstance;
       testComponent = fixture.debugElement.componentInstance;
     });
@@ -46,24 +43,36 @@ describe('MdcTextarea', () => {
     it('#should equal textarea', () => {
       expect(textFieldInstance.textarea).toBe(true);
     });
+
+    it('#should set character counter true', () => {
+      testComponent.characterCounter = true;
+      fixture.detectChanges();
+      expect(testComponent.characterCounter).toBe(true);
+
+      testComponent.comments = 'my comments';
+      fixture.detectChanges();
+      expect(textFieldInstance._mdcCharacterCounter.foundation).toBeDefined();
+    });
   });
 });
 
 /** Simple component for testing. */
 @Component({
   template: `
-    <mdc-textarea
-      [(ngModel)]="comments"
-      label="Comments"
-      [rows]="3"
-      [cols]="5"
-      [required]="isRequired"
-      [disabled]="isDisabled">
-    </mdc-textarea>
-  `,
+  <mdc-textarea
+    [(ngModel)]="comments"
+    label="Comments"
+    [rows]="3"
+    [cols]="5"
+    maxlength="140"
+    [characterCounter]="characterCounter"
+    [required]="isRequired"
+    [disabled]="isDisabled">
+  </mdc-textarea>`,
 })
 class SimpleTextfield {
   comments: string = '';
   isDisabled: boolean = false;
   isRequired: boolean = false;
+  characterCounter: boolean;
 }

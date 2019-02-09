@@ -261,6 +261,10 @@ export class MdcTextField extends _MdcTextFieldMixinBase implements AfterViewIni
     const newValue = toBoolean(value);
     if (newValue !== this._characterCounter) {
       this._characterCounter = newValue;
+      // if (!this.textarea) {
+      //   const charCounter = document.createElement('div');
+      //   this.helperText!.elementRef.nativeElement.appendChild(charCounter);
+      // }
     }
   }
   private _characterCounter: boolean = false;
