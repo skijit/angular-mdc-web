@@ -1,4 +1,4 @@
-<!-- <div class="demo-content">
+<div class="demo-content">
   <div class="demo-layout__row">
     <button mdc-button
       (click)="standardCharacterCounter.outlined = !standardCharacterCounter.outlined">Outlined:
@@ -6,13 +6,11 @@
       'Off'}}</button>
   </div>
   <mdc-form-field>
-    <mdc-text-field #standardCharacterCounter label="Standard" required
-      [helperText]="standardCharacterCounterHelper"></mdc-text-field>
-    <mdc-helper-text #standardCharacterCounterHelper>
-      <div mdcTextFieldCharacterCounter>0 / 10</div>
-    </mdc-helper-text>
+    <mdc-text-field #standardCharacterCounter label="Standard" characterCounter>
+    </mdc-text-field>
+    <mdc-helper-text #standardHelper persistent>Helper Text</mdc-helper-text>
   </mdc-form-field>
-</div> -->
+</div>
 
 <div class="demo-content">
   <div class="demo-layout__row">

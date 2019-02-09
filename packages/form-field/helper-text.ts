@@ -3,15 +3,18 @@ import {
   Component,
   ElementRef,
   Input,
+  ViewChild,
   ViewEncapsulation
 } from '@angular/core';
 import { toBoolean } from '@angular-mdc/web/common';
 
 @Component({
+  moduleId: module.id,
   selector: `mdc-helper-text, [mdcHelperText],
   mdc-text-field-helper-text, [mdcTextFieldHelperText], [mdcSelectHelperText]`,
   exportAs: 'mdcHelperText, mdcSelectHelperText',
-  template: '<ng-content></ng-content>',
+  host: { 'class': 'mdc-text-field-helper-line' },
+  template: '<div #helperText><ng-content></ng-content></div>',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
@@ -37,6 +40,8 @@ export class MdcHelperText {
     }
   }
   private _validation: boolean = false;
+
+  @ViewChild('helperText') _helperText!: ElementRef<HTMLElement>;
 
   constructor(public elementRef: ElementRef<HTMLElement>) { }
 
@@ -65,7 +70,7 @@ export class MdcHelperText {
   }
 
   addHelperTextClass(className: string): void {
-    this._getHostElement().classList.add(`${className}-helper-text`);
+    this._helperText.nativeElement.classList.add(`${className}-helper-text`);
   }
 
   private _createAdapter() {

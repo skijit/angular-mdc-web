@@ -30,8 +30,7 @@ import { MdcHelperText } from './helper-text';
   },
   template: `
   <ng-content></ng-content>
-  <ng-content select="[mdcHelperText, mdc-helper-text]"></ng-content>
-  `,
+  <ng-content select="[mdcHelperText, mdc-helper-text]"></ng-content>`,
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
