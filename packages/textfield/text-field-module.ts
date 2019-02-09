@@ -9,10 +9,12 @@ import { MdcFormFieldModule } from '@angular-mdc/web/form-field';
 import { MdcTextField } from './text-field';
 import { MdcTextarea } from './textarea';
 import { MdcTextFieldIcon } from './text-field-icon';
+import { MdcTextFieldCharacterCounter } from './text-field-character-counter';
 
 const TEXTFIELD_DECLARATIONS = [
   MdcTextarea,
   MdcTextField,
+  MdcTextFieldCharacterCounter,
   MdcTextFieldIcon
 ];
 

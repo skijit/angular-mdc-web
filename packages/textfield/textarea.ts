@@ -19,6 +19,7 @@ import { MdcTextField } from './text-field';
     '[class.mdc-text-field--invalid]': 'errorState'
   },
   template: `
+  <div mdcTextFieldCharacterCounter *ngIf="characterCounter"></div>
   <textarea #inputElement class="mdc-text-field__input"
     [id]="id"
     [rows]="rows"
@@ -35,8 +36,7 @@ import { MdcTextField } from './text-field';
     (input)="onInput($event)"
     (change)="onChange($event)"
     (blur)="onBlur()"></textarea>
-  <mdc-notched-outline [label]="label" [for]="id"></mdc-notched-outline>
-  `,
+  <mdc-notched-outline [label]="label" [for]="id"></mdc-notched-outline>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })

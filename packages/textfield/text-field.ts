@@ -34,6 +34,7 @@ import {
 } from '@angular-mdc/web/form-field';
 
 import { MdcTextFieldIcon } from './text-field-icon';
+import { MdcTextFieldCharacterCounter } from './text-field-character-counter';
 
 import { MDCTextFieldHelperTextFoundation } from '@material/textfield/helper-text/index';
 import { MDCTextFieldFoundation } from '@material/textfield/index';
@@ -254,6 +255,16 @@ export class MdcTextField extends _MdcTextFieldMixinBase implements AfterViewIni
   }
   private _value: any;
 
+  @Input()
+  get characterCounter(): boolean { return this._characterCounter; }
+  set characterCounter(value: boolean) {
+    const newValue = toBoolean(value);
+    if (newValue !== this._characterCounter) {
+      this._characterCounter = newValue;
+    }
+  }
+  private _characterCounter: boolean = false;
+
   /** An object used to control when error messages are shown. */
   @Input() errorStateMatcher?: ErrorStateMatcher;
 
@@ -265,7 +276,8 @@ export class MdcTextField extends _MdcTextFieldMixinBase implements AfterViewIni
   @ViewChild(MdcLineRipple) _lineRipple?: MdcLineRipple;
   @ViewChild(MdcNotchedOutline) _notchedOutline?: MdcNotchedOutline;
   @ViewChild(MdcFloatingLabel) _floatingLabel?: MdcFloatingLabel;
-  @ContentChildren(MdcTextFieldIcon, { descendants: true }) _icons?: QueryList<MdcTextFieldIcon>;
+  @ViewChild(MdcTextFieldCharacterCounter) _mdcCharacterCounter?: MdcTextFieldCharacterCounter;
+  @ContentChildren(MdcTextFieldIcon, { descendants: true }) _icons!: QueryList<MdcTextFieldIcon>;
 
   /** View to model callback called when value changes */
   _onChange: (value: any) => void = () => { };
@@ -305,6 +317,7 @@ export class MdcTextField extends _MdcTextFieldMixinBase implements AfterViewIni
     return {
       getNativeInput: () => {
         return {
+          maxLength: this.maxlength,
           type: this._type,
           value: this._platform.isBrowser ? this._input.nativeElement.value : this._value,
           disabled: this._disabled,
@@ -357,7 +370,8 @@ export class MdcTextField extends _MdcTextFieldMixinBase implements AfterViewIni
   /** Returns a map of all subcomponents to subfoundations.*/
   private _getFoundationMap() {
     return {
-      helperText: this._helperText || undefined
+      helperText: this._helperText || undefined,
+      characterCounter: this._mdcCharacterCounter ? this._mdcCharacterCounter.foundation : undefined
     };
   }
 
@@ -373,7 +387,8 @@ export class MdcTextField extends _MdcTextFieldMixinBase implements AfterViewIni
     setTransformOrigin(evt: Event | TouchEvent): void,
     handleTextFieldInteraction(): void,
     activateFocus(): void,
-    deactivateFocus(): void
+    deactivateFocus(): void,
+    handleInput(): void
   } = new MDCTextFieldFoundation(this._createAdapter());
 
   constructor(
@@ -454,6 +469,7 @@ export class MdcTextField extends _MdcTextFieldMixinBase implements AfterViewIni
   onInput(evt: KeyboardEvent): void {
     const value = (<any>evt.target).value;
     this.setValue(value, true);
+    this._foundation.handleInput();
     this.input.emit(value);
     evt.stopPropagation();
   }
