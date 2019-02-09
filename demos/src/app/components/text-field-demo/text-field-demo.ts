@@ -363,6 +363,12 @@ waypoint = new Directions();`
 }`
   };
 
+  exampleTACounter = {
+    html: `<mdc-textarea label="Comments" characterCounter maxlength="140"
+  [helperText]="taCounterHelper" rows="8" cols="40"></mdc-textarea>
+<mdc-helper-text #taCounterHelper validation>Helper Text</mdc-helper-text>`
+  };
+
   exampleTextarea = {
     html: `<mdc-textarea label="Comments" rows="8" cols="40" required [helperText]="commentsHelper"></mdc-textarea>
 <mdc-helper-text #commentsHelper validation>Helper Text</mdc-helper-text>`,
